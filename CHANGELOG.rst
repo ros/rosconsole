@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.7 (2018-05-21)
+-------------------
 * moved rosconsole into a separate repository (see `rosdistro#17919 <https://github.com/ros/rosdistro/issues/17919>`_)
 
 1.13.6 (2018-02-05)
