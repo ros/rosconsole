@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* moved rosconsole into a separate repository (see `rosdistro#17919 <https://github.com/ros/rosdistro/issues/17919>`_)
+
 1.13.6 (2018-02-05)
 -------------------
 * rename log macro argument from rate to period (`#1318 <https://github.com/ros/ros_comm/issues/1318>`_)
