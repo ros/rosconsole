@@ -1,3 +1,0 @@
-<launch>
-  <test test-name="roswtf_command_line_online" pkg="roswtf" type="check_roswtf_command_line_online.py" />
-</launch>

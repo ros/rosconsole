@@ -1,3 +1,0 @@
-<launch>
-  <machine name="machine2" address="address2" ros-root="/ros/root" ros-package-path="/ros/package/path" ros-host-name="hostname" />
-</launch>
