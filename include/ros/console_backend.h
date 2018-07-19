@@ -30,6 +30,19 @@
 #ifndef ROSCONSOLE_CONSOLE_BACKEND_H
 #define ROSCONSOLE_CONSOLE_BACKEND_H
 
+#include <ros/macros.h>
+
+// Import/export for windows dll's and visibility for gcc shared libraries.
+#ifdef ROS_BUILD_SHARED_LIBS // ros is being built around shared libraries
+  #ifdef rosconsole_backend_interface_EXPORTS // we are building a shared lib/dll
+    #define ROSCONSOLE_BACKEND_DECL ROS_HELPER_EXPORT
+  #else // we are using shared lib/dll
+    #define ROSCONSOLE_BACKEND_DECL ROS_HELPER_IMPORT
+  #endif
+#else // ros is being built around static libraries
+  #define ROSCONSOLE_BACKEND_DECL
+#endif
+
 namespace ros
 {
 namespace console
@@ -55,11 +68,11 @@ namespace backend
 
 void notifyLoggerLevelsChanged();
 
-extern void (*function_notifyLoggerLevelsChanged)();
+ROSCONSOLE_BACKEND_DECL extern void (*function_notifyLoggerLevelsChanged)();
 
 void print(void* logger_handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
 
-extern void (*function_print)(void*, ::ros::console::Level, const char*, const char*, const char*, int);
+ROSCONSOLE_BACKEND_DECL extern void (*function_print)(void*, ::ros::console::Level, const char*, const char*, const char*, int);
 
 } // namespace backend
 } // namespace console
