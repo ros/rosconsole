@@ -220,7 +220,6 @@ bool get_loggers(std::map<std::string, levels::Level>& loggers)
   log4cxx::LoggerList::iterator end = current_loggers.end();
   for (; it != end; ++it)
   {
-    std::string name;
     #ifdef _MSC_VER
       LOG4CXX_ENCODE_CHAR(tmpstr, (*it)->getName()); // has to handle LogString with wchar types.
       std::string name = tmpstr;
