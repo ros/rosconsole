@@ -35,6 +35,10 @@
 
 #include "log4cxx/appenderskeleton.h"
 #include "log4cxx/spi/loggingevent.h"
+#ifdef _MSC_VER
+  // Have to be able to encode wchar LogStrings on windows.
+  #include "log4cxx/helpers/transcoder.h"
+#endif
 
 #include <vector>
 
@@ -57,8 +61,16 @@ protected:
   {
     Info info;
     info.level_ = event->getLevel();
+#ifdef _MSC_VER
+    LOG4CXX_ENCODE_CHAR(msgstr, event->getMessage());  // has to handle LogString with wchar types.
+    info.message_ = msgstr;  // msgstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
+
+    LOG4CXX_ENCODE_CHAR(loggerstr, event->getLoggerName());  // has to handle LogString with wchar types.
+    info.logger_name_ = loggerstr;  // loggerstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
+#else
     info.message_ = event->getMessage();
     info.logger_name_ = event->getLoggerName();
+#endif
 
     info_.push_back( info );
   }
