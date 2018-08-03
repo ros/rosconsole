@@ -107,7 +107,7 @@ protected:
     }
 #ifdef _MSC_VER
     LOG4CXX_ENCODE_CHAR(tmpstr, event->getMessage());  // has to handle LogString with wchar types.
-    std::string msg = tmpstr  // tmpstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
+    std::string msg = tmpstr;  // tmpstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
 #else
     std::string msg = event->getMessage();
 #endif
@@ -171,9 +171,6 @@ void initialize()
   if ( config_file_cstr != NULL ) {
 	  free(config_file_cstr);
   }
-  if ( format_string != NULL ) {
-	  free(format_string);
-  }
   // getenv implementations don't need free'ing.
 #endif
 }
@@ -208,7 +205,7 @@ std::string getName(void* handle)
   const log4cxx::spi::LoggingEvent* event = (const log4cxx::spi::LoggingEvent*)handle;
 #ifdef _MSC_VER
   LOG4CXX_ENCODE_CHAR(tmpstr, event->getLoggerName());  // has to handle LogString with wchar types.
-  return tmpstr  // tmpstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
+  return tmpstr;  // tmpstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
 #else
   return event->getLoggerName();
 #endif
@@ -223,11 +220,11 @@ bool get_loggers(std::map<std::string, levels::Level>& loggers)
   log4cxx::LoggerList::iterator end = current_loggers.end();
   for (; it != end; ++it)
   {
-    std::string name;
     #ifdef _MSC_VER
-      LOG4CXX_ENCODE_CHAR(name, (*it)->getName()); // has to handle LogString with wchar types.
+      LOG4CXX_ENCODE_CHAR(tmpstr, (*it)->getName()); // has to handle LogString with wchar types.
+      std::string name = tmpstr;
     #else
-      name = (*it)->getName();
+      std::string name = (*it)->getName();
     #endif
 
     const log4cxx::LevelPtr& log4cxx_level = (*it)->getEffectiveLevel();
@@ -334,7 +331,7 @@ protected:
 
     #ifdef _MSC_VER
       LOG4CXX_ENCODE_CHAR(tmpstr, event->getMessage());  // has to handle LogString with wchar types.
-      std::string msg = tmpstr  // tmpstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
+      std::string msg = tmpstr;  // tmpstr gets instantiated inside the LOG4CXX_ENCODE_CHAR macro
     #else
       std::string msg = event->getMessage();
     #endif

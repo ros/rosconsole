@@ -110,7 +110,7 @@ install(DIRECTORY include/
 if(CATKIN_ENABLE_TESTING)
   catkin_add_gtest(${PROJECT_NAME}-utest test/utest.cpp)
   if(TARGET ${PROJECT_NAME}-utest)
-    target_link_libraries(${PROJECT_NAME}-utest ${PROJECT_NAME})
+    target_link_libraries(${PROJECT_NAME}-utest ${PROJECT_NAME} ${LOG4CXX_LIBRARIES})
   endif()
 
   if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
@@ -122,6 +122,6 @@ if(CATKIN_ENABLE_TESTING)
 
   catkin_add_gtest(${PROJECT_NAME}-thread_test test/thread_test.cpp)
   if(TARGET ${PROJECT_NAME}-thread_test)
-    target_link_libraries(${PROJECT_NAME}-thread_test ${PROJECT_NAME})
+    target_link_libraries(${PROJECT_NAME}-thread_test ${PROJECT_NAME} ${LOG4CXX_LIBRARIES})
   endif()
 endif()
