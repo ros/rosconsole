@@ -66,11 +66,11 @@ typedef levels::Level Level;
 namespace backend
 {
 
-void notifyLoggerLevelsChanged();
+ROSCONSOLE_BACKEND_DECL void notifyLoggerLevelsChanged();
 
 ROSCONSOLE_BACKEND_DECL extern void (*function_notifyLoggerLevelsChanged)();
 
-void print(void* logger_handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
+ROSCONSOLE_BACKEND_DECL void print(void* logger_handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
 
 ROSCONSOLE_BACKEND_DECL extern void (*function_print)(void*, ::ros::console::Level, const char*, const char*, const char*, int);
 
