@@ -36,16 +36,9 @@
 #include "ros/console.h"
 #include "ros/assert.h"
 #include <ros/time.h>
-#include <ros/macros.h>
-#ifdef ROS_BUILD_SHARED_LIBS // ros is being built around shared libraries
-  #ifdef rosconsole_log4cxx_EXPORTS // we are building a shared lib/dll
-    #define ROSCONSOLE_LOG4CXX_DECL ROS_HELPER_EXPORT
-  #else // we are using shared lib/dll
-    #define ROSCONSOLE_LOG4CXX_DECL ROS_HELPER_IMPORT
-  #endif
-#else // ros is being built around static libraries
-  #define ROSCONSOLE_LOG4CXX_DECL
-#endif
+
+#define ROSCONSOLE_CONSOLE_IMPL_EXPORTS
+#include "ros/console_impl.h"
 
 #include "log4cxx/appenderskeleton.h"
 #include "log4cxx/spi/loggingevent.h"
