@@ -99,7 +99,7 @@ void register_appender(LogAppender* appender)
 
 void deregister_appender(LogAppender* appender)
 {
-  if(rosconsole_glog_appender==appender)
+  if(rosconsole_glog_appender == appender)
   {
     rosconsole_glog_appender = 0;
   }
