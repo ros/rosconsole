@@ -349,7 +349,7 @@ protected:
   ros::console::LogAppender* appender_;
 };
 
-Log4cxxAppender* g_log4cxx_appender;
+Log4cxxAppender* g_log4cxx_appender = 0;
 
 void register_appender(LogAppender* appender)
 {
@@ -370,8 +370,11 @@ void deregister_appender(LogAppender* appender){
 void shutdown()
 {
   const log4cxx::LoggerPtr& logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
-  logger->removeAppender(g_log4cxx_appender);
-  g_log4cxx_appender = 0;
+  if(g_log4cxx_appender)
+  {
+    logger->removeAppender(g_log4cxx_appender);
+    g_log4cxx_appender = 0;
+  }
   // reset this so that the logger doesn't get crashily destroyed
   // again during global destruction.  
   //
