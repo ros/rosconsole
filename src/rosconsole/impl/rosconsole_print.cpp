@@ -70,6 +70,10 @@ void register_appender(LogAppender* appender)
   rosconsole_print_appender = appender;
 }
 
+void deregister_appender(){
+	rosconsole_print_appender = 0;
+}
+
 void shutdown()
 {}
 

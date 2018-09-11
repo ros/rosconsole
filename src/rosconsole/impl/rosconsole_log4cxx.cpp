@@ -354,6 +354,11 @@ void register_appender(LogAppender* appender)
   logger->addAppender(g_log4cxx_appender);
 }
 
+void deregister_appender(){
+ 	logger->removeAppender(g_log4cxx_appender);
+	delete g_log4cxx_appender;
+	g_log4cxx_appender = 0;
+}
 void shutdown()
 {
   const log4cxx::LoggerPtr& logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
