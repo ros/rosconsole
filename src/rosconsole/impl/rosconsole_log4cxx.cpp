@@ -369,9 +369,9 @@ void deregister_appender(LogAppender* appender){
 }
 void shutdown()
 {
-  const log4cxx::LoggerPtr& logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
   if(g_log4cxx_appender)
   {
+    const log4cxx::LoggerPtr& logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
     logger->removeAppender(g_log4cxx_appender);
     g_log4cxx_appender = 0;
   }
