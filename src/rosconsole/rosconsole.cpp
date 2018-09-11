@@ -63,7 +63,7 @@ void shutdown();
 
 void register_appender(LogAppender* appender);
 
-void deregister_appender();
+void deregister_appender(LogAppender* appender);
 
 void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
 
