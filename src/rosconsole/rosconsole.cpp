@@ -459,27 +459,14 @@ void initialize()
 
 void vformatToBuffer(boost::shared_array<char>& buffer, size_t& buffer_size, const char* fmt, va_list args)
 {
-#ifdef _MSC_VER
-  va_list arg_copy = args; // dangerous?
-#else
   va_list arg_copy;
   va_copy(arg_copy, args);
-#endif
-#ifdef _MSC_VER
-  size_t total = vsnprintf_s(buffer.get(), buffer_size, buffer_size, fmt, args);
-#else
   size_t total = vsnprintf(buffer.get(), buffer_size, fmt, args);
-#endif
   if (total >= buffer_size)
   {
     buffer_size = total + 1;
     buffer.reset(new char[buffer_size]);
-
-#ifdef _MSC_VER
-    vsnprintf_s(buffer.get(), buffer_size, buffer_size, fmt, arg_copy);
-#else
     vsnprintf(buffer.get(), buffer_size, fmt, arg_copy);
-#endif
   }
   va_end(arg_copy);
 }
