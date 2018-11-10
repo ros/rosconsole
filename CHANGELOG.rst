@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.8 (2018-11-09)
+-------------------
 * fix double index increment in rosconsole_glog (`#15 <https://github.com/ros/rosconsole/issues/15>`_)
 * trigger LOG_THROTTLE when time goes backwards (`#12 <https://github.com/ros/rosconsole/issues/12>`_)
 * add deregistry function for LogAppender. (`#17 <https://github.com/ros/rosconsole/issues/17>`_)
