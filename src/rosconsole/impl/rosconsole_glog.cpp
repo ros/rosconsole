@@ -75,7 +75,6 @@ void* getHandle(const std::string& name)
     {
       return (void*)index;
     }
-    index++;
   }
   // add unknown names on demand with default level
   rosconsole_glog_log_levels.push_back(std::pair<std::string, levels::Level>(name, ::ros::console::levels::Info));
