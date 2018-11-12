@@ -453,11 +453,11 @@ ROSCONSOLE_DECL std::string formatToString(const char* fmt, ...);
   do \
   { \
     ROSCONSOLE_DEFINE_LOCATION(true, level, name); \
-    static double last_hit = 0.0; \
-    double now = ::ros::Time::now().toSec(); \
-    if (ROS_UNLIKELY(__rosconsole_define_location__enabled) && ROSCONSOLE_THROTTLE_CHECK(now, last_hit, period))\
+    static double __ros_log_throttle_last_hit__ = 0.0; \
+    double __ros_log_throttle_now__ = ::ros::Time::now().toSec(); \
+    if (ROS_UNLIKELY(__rosconsole_define_location__enabled) && ROSCONSOLE_THROTTLE_CHECK(__ros_log_throttle_now__, __ros_log_throttle_last_hit__, period))\
     { \
-      last_hit = now; \
+      __ros_log_throttle_last_hit__ = __ros_log_throttle_now__; \
       ROSCONSOLE_PRINT_AT_LOCATION(__VA_ARGS__); \
     } \
   } while(false)
