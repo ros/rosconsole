@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.9 (2018-11-12)
+-------------------
 * don't overlay variables in logging macro (`#21 <https://github.com/ros/rosconsole/issues/21>`_)
 
 1.13.8 (2018-11-09)
