@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* don't overlay variables in logging macro (`#21 <https://github.com/ros/rosconsole/issues/21>`_)
+
 1.13.8 (2018-11-09)
 -------------------
 * fix double index increment in rosconsole_glog (`#15 <https://github.com/ros/rosconsole/issues/15>`_)
