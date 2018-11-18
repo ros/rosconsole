@@ -42,6 +42,7 @@
 #include <boost/shared_array.hpp>
 #include <boost/regex.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #include <cstdarg>
 #include <cstdlib>
@@ -181,26 +182,67 @@ struct MessageToken : public Token
 
 struct TimeToken : public Token
 {
+  explicit TimeToken(const std::string &format) : format_(format) {};
+
   virtual std::string getString(void*, ::ros::console::Level, const char*, const char*, const char*, int)
   {
     std::stringstream ss;
-    ss << ros::WallTime::now();
+
+    if (format_.empty())
+    {
+      ss << ros::WallTime::now();
+    }
+    else
+    {
+      boost::posix_time::time_facet *facet = new boost::posix_time::time_facet();
+      facet->format(format_.c_str());
+      ss.imbue(std::locale(std::locale::classic(), facet));
+      ss << ros::WallTime::now().toBoost();
+    }
+
     if (ros::Time::isValid() && ros::Time::isSimTime())
     {
-      ss << ", " << ros::Time::now();
+      ss << ", ";
+
+      if (format_.empty())
+      {
+        ss << ros::Time::now();
+      }
+      else
+      {
+        ss << ros::Time::now().toBoost();
+      }
     }
     return ss.str();
   }
+
+  const std::string format_;
 };
 
 struct WallTimeToken : public Token
 {
+  explicit WallTimeToken(const std::string &format) : format_(format) {};
+
   virtual std::string getString(void*, ::ros::console::Level, const char*, const char*, const char*, int)
   {
     std::stringstream ss;
-    ss << ros::WallTime::now();
+
+    if (format_.empty())
+    {
+      ss << ros::WallTime::now();
+    }
+    else
+    {
+      boost::posix_time::time_facet* facet = new boost::posix_time::time_facet();
+      facet->format(format_.c_str());
+      ss.imbue(std::locale(std::locale::classic(), facet));
+      ss << ros::WallTime::now().toBoost();
+    }
+
     return ss.str();
   }
+
+  const std::string format_;
 };
 
 struct ThreadToken : public Token
@@ -262,13 +304,29 @@ TokenPtr createTokenFromType(const std::string& type)
   {
     return TokenPtr(boost::make_shared<MessageToken>());
   }
-  else if (type == "time")
+  else if (type == "time" || strncmp(type.c_str(), std::string("time:").c_str(), std::string("time:").size()) == 0)
   {
-    return TokenPtr(boost::make_shared<TimeToken>());
+    std::string format;
+
+    std::size_t found = type.find(':');
+    if (found != std::string::npos)
+    {
+      format = type.substr(found + 1, type.size());
+    }
+
+    return TokenPtr(boost::make_shared<TimeToken>(format));
   }
-  else if (type == "walltime")
+  else if (type == "walltime" || strncmp(type.c_str(), std::string("walltime:").c_str(), std::string("walltime:").size()) == 0)
   {
-    return TokenPtr(boost::make_shared<WallTimeToken>());
+    std::string format;
+
+    std::size_t found = type.find(':');
+    if (found != std::string::npos)
+    {
+      format = type.substr(found + 1, type.size());
+    }
+
+    return TokenPtr(boost::make_shared<WallTimeToken>(format));
   }
   else if (type == "thread")
   {
@@ -298,7 +356,7 @@ void Formatter::init(const char* fmt)
 {
   format_ = fmt;
 
-  boost::regex e("\\$\\{([a-z|A-Z]+)\\}");
+  boost::regex e("\\$\\{([^\\}]+)\\}");
   boost::match_results<std::string::const_iterator> results;
   std::string::const_iterator start, end;
   start = format_.begin();
@@ -364,12 +422,7 @@ void Formatter::print(void* logger_handle, ::ros::console::Level level, const ch
 
   std::stringstream ss;
   ss << color;
-  V_Token::iterator it = tokens_.begin();
-  V_Token::iterator end = tokens_.end();
-  for (; it != end; ++it)
-  {
-    ss << (*it)->getString(logger_handle, level, str, file, function, line);
-  }
+  ss << getTokenStrings(logger_handle, level, str, file, function, line);
   ss << COLOR_NORMAL;
 
   fprintf(f, "%s\n", ss.str().c_str());
@@ -383,6 +436,20 @@ void Formatter::print(void* logger_handle, ::ros::console::Level level, const ch
       fprintf(stderr, "Error: failed to perform fflush on stdout, fflush return code is %d\n", flush_result);
     }
   }
+}
+
+std::string
+Formatter::getTokenStrings(void *logger_handle, ::ros::console::Level level, const char *str, const char *file,
+                           const char *function, int line) const
+{
+  std::stringstream ss;
+
+  for (V_Token::const_iterator it = tokens_.begin(); it != tokens_.end(); ++it)
+  {
+    ss << (*it)->getString(logger_handle, level, str, file, function, line);
+  }
+
+  return ss.str();
 }
 
 Formatter g_formatter;
