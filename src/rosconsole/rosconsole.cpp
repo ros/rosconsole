@@ -716,6 +716,11 @@ void register_appender(LogAppender* appender)
   ros::console::impl::register_appender(appender);
 }
 
+void deregister_appender(LogAppender* appender)
+{
+  ros::console::impl::deregister_appender(appender);
+}
+
 void shutdown() 
 {
   g_shutting_down = true;
