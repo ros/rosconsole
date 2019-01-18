@@ -2,6 +2,18 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.13.9 (2018-11-12)
+-------------------
+* don't overlay variables in logging macro (`#21 <https://github.com/ros/rosconsole/issues/21>`_)
+
+1.13.8 (2018-11-09)
+-------------------
+* fix double index increment in rosconsole_glog (`#15 <https://github.com/ros/rosconsole/issues/15>`_)
+* trigger LOG_THROTTLE when time goes backwards (`#12 <https://github.com/ros/rosconsole/issues/12>`_)
+* add deregistry function for LogAppender. (`#17 <https://github.com/ros/rosconsole/issues/17>`_)
+* replaced zero for NULL for null pointer constants (`#14 <https://github.com/ros/rosconsole/issues/14>`_)
+* fix rosconsole build issue when built on Windows (`#13 <https://github.com/ros/rosconsole/issues/13>`_)
+
 1.13.7 (2018-05-21)
 -------------------
 * moved rosconsole into a separate repository (see `rosdistro#17919 <https://github.com/ros/rosdistro/issues/17919>`_)
