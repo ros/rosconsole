@@ -33,6 +33,11 @@
 #include <ros/macros.h>
 #include "ros/console.h"
 
+// export interface functions shared by all impl instances in one single header
+// since CMake would not help define custome flag like ROSCONSOLE_CONSOLE_IMPL_EXPORTS,
+// the ROSCONSOLE_CONSOLE_IMPL_EXPORTS macro needs to be defined
+// in the impl code (e.g. rosconsole_log4css.cpp) before including this header
+
 // Import/export for windows dll's and visibility for gcc shared libraries.
 #ifdef ROS_BUILD_SHARED_LIBS // ros is being built around shared libraries
   #ifdef ROSCONSOLE_CONSOLE_IMPL_EXPORTS // we are building a shared lib/dll
@@ -43,7 +48,6 @@
 #else // ros is being built around static libraries
   #define ROSCONSOLE_CONSOLE_IMPL_DECL
 #endif
-
 
 // declare interface for rosconsole implementations
 namespace ros
