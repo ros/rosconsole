@@ -27,10 +27,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "ros/console.h"
-#define ROSCONSOLE_CONSOLE_IMPL_EXPORTS
-#include "ros/console_impl.h"
+#ifndef ROSCONSOLE_CONSOLE_IMPL_H
+#define ROSCONSOLE_CONSOLE_IMPL_H
 
+#include <ros/macros.h>
+#include "ros/console.h"
+
+// export interface functions shared by all impl instances in one single header
+// since CMake would not help define custome flag like ROSCONSOLE_CONSOLE_IMPL_EXPORTS,
+// the ROSCONSOLE_CONSOLE_IMPL_EXPORTS macro needs to be defined
+// in the impl code (e.g. rosconsole_log4css.cpp) before including this header
+
+// Import/export for windows dll's and visibility for gcc shared libraries.
+#ifdef ROS_BUILD_SHARED_LIBS // ros is being built around shared libraries
+  #ifdef ROSCONSOLE_CONSOLE_IMPL_EXPORTS // we are building a shared lib/dll
+    #define ROSCONSOLE_CONSOLE_IMPL_DECL ROS_HELPER_EXPORT
+  #else // we are using shared lib/dll
+    #define ROSCONSOLE_CONSOLE_IMPL_DECL ROS_HELPER_IMPORT
+  #endif
+#else // ros is being built around static libraries
+  #define ROSCONSOLE_CONSOLE_IMPL_DECL
+#endif
+
+// declare interface for rosconsole implementations
 namespace ros
 {
 namespace console
@@ -38,60 +57,26 @@ namespace console
 namespace impl
 {
 
-LogAppender* rosconsole_print_appender = 0;
+ROSCONSOLE_CONSOLE_IMPL_DECL void initialize();
 
-void initialize()
-{}
+ROSCONSOLE_CONSOLE_IMPL_DECL void shutdown();
 
-void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
-{
-  ::ros::console::backend::print(0, level, str, file, function, line);
-  if(rosconsole_print_appender)
-  {
-    rosconsole_print_appender->log(level, str, file, function, line);
-  }
-}
+ROSCONSOLE_CONSOLE_IMPL_DECL void register_appender(LogAppender* appender);
 
-bool isEnabledFor(void* handle, ::ros::console::Level level)
-{
-  return level != ::ros::console::levels::Debug;
-}
+ROSCONSOLE_CONSOLE_IMPL_DECL void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
 
-void* getHandle(const std::string& name)
-{
-  return 0;
-}
+ROSCONSOLE_CONSOLE_IMPL_DECL bool isEnabledFor(void* handle, ::ros::console::Level level);
 
-std::string getName(void* handle)
-{
-  return "";
-}
+ROSCONSOLE_CONSOLE_IMPL_DECL void* getHandle(const std::string& name);
 
-void register_appender(LogAppender* appender)
-{
-  rosconsole_print_appender = appender;
-}
+ROSCONSOLE_CONSOLE_IMPL_DECL std::string getName(void* handle);
 
-void deregister_appender(LogAppender* appender){
-  if(rosconsole_print_appender == appender)
-  {
-    rosconsole_print_appender = 0;
-  }
-}
+ROSCONSOLE_CONSOLE_IMPL_DECL bool get_loggers(std::map<std::string, levels::Level>& loggers);
 
-void shutdown()
-{}
-
-bool get_loggers(std::map<std::string, levels::Level>& loggers)
-{
-  return true;
-}
-
-bool set_logger_level(const std::string& name, levels::Level level)
-{
-  return false;
-}
+ROSCONSOLE_CONSOLE_IMPL_DECL bool set_logger_level(const std::string& name, levels::Level level);
 
 } // namespace impl
 } // namespace console
 } // namespace ros
+
+#endif // ROSCONSOLE_CONSOLE_IMPL_H

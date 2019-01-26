@@ -1,4 +1,6 @@
 #include "ros/console.h"
+#define ROSCONSOLE_CONSOLE_IMPL_EXPORTS
+#include "ros/console_impl.h"
 
 #include <glog/logging.h>
 
@@ -16,8 +18,6 @@ void initialize()
 {
   google::InitGoogleLogging("rosconsole");
 }
-
-std::string getName(void* handle);
 
 void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
 {

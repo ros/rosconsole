@@ -36,6 +36,9 @@
 #include "ros/console.h"
 #include "ros/assert.h"
 #include <ros/time.h>
+#define ROSCONSOLE_CONSOLE_IMPL_EXPORTS
+#include "ros/console_impl.h"
+
 #include "log4cxx/appenderskeleton.h"
 #include "log4cxx/spi/loggingevent.h"
 #include "log4cxx/level.h"

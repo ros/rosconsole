@@ -34,6 +34,7 @@
 #endif
 
 #include "ros/console.h"
+#include "ros/console_impl.h"
 #include "ros/assert.h"
 #include <ros/time.h>
 
@@ -54,31 +55,6 @@ namespace ros
 {
 namespace console
 {
-namespace impl
-{
-
-void initialize();
-
-void shutdown();
-
-void register_appender(LogAppender* appender);
-
-void deregister_appender(LogAppender* appender);
-
-void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
-
-bool isEnabledFor(void* handle, ::ros::console::Level level);
-
-void* getHandle(const std::string& name);
-
-std::string getName(void* handle);
-
-bool get_loggers(std::map<std::string, levels::Level>& loggers);
-
-bool set_logger_level(const std::string& name, levels::Level level);
-
-} // namespace impl
-
 
 bool g_initialized = false;
 bool g_shutting_down = false;
