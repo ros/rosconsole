@@ -109,6 +109,8 @@ public:
 
 ROSCONSOLE_DECL void register_appender(LogAppender* appender);
 
+ROSCONSOLE_DECL void deregister_appender(LogAppender* appender);
+
 struct Token
 {
   virtual ~Token() {}
