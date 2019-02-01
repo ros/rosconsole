@@ -63,6 +63,8 @@ ROSCONSOLE_CONSOLE_IMPL_DECL void shutdown();
 
 ROSCONSOLE_CONSOLE_IMPL_DECL void register_appender(LogAppender* appender);
 
+ROSCONSOLE_CONSOLE_IMPL_DECL void deregister_appender(LogAppender* appender);
+
 ROSCONSOLE_CONSOLE_IMPL_DECL void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
 
 ROSCONSOLE_CONSOLE_IMPL_DECL bool isEnabledFor(void* handle, ::ros::console::Level level);
