@@ -2,6 +2,13 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add missing declaration of deregister_appender in impl namespace (`#28 <https://github.com/ros/rosconsole/issues/28>`_)
+* add deregistry declaration and base impl (`#23 <https://github.com/ros/rosconsole/issues/23>`_)
+* dll import/export visibility macro update (`#26 <https://github.com/ros/rosconsole/issues/26>`_)
+* fix long message causing program exit at exception (`#25 <https://github.com/ros/rosconsole/issues/25>`_)
+
 1.13.9 (2018-11-12)
 -------------------
 * don't overlay variables in logging macro (`#21 <https://github.com/ros/rosconsole/issues/21>`_)
