@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.10 (2019-03-04)
+--------------------
 * add missing declaration of deregister_appender in impl namespace (`#28 <https://github.com/ros/rosconsole/issues/28>`_)
 * add deregistry declaration and base impl (`#23 <https://github.com/ros/rosconsole/issues/23>`_)
 * dll import/export visibility macro update (`#26 <https://github.com/ros/rosconsole/issues/26>`_)
