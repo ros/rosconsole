@@ -351,6 +351,7 @@ void Formatter::print(void* logger_handle, ::ros::console::Level level, const ch
   else if (level == levels::Warn)
   {
     color = COLOR_YELLOW;
+    f = stderr;
   }
   else if (level == levels::Info)
   {
