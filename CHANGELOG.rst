@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.11 (2019-10-03)
+--------------------
 * direct WARN level messages to stderr (`#29 <https://github.com/ros/rosconsole/issues/29>`_)
 
 1.13.10 (2019-03-04)
