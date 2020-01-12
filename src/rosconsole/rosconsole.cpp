@@ -335,7 +335,7 @@ void Formatter::init(const char* fmt)
 
 void Formatter::print(void* logger_handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
 {
-  const char* color = NULL;
+  const char* color = COLOR_RED;
   FILE* f = stdout;
 
   if (level == levels::Fatal)
@@ -361,8 +361,6 @@ void Formatter::print(void* logger_handle, ::ros::console::Level level, const ch
   {
     color = COLOR_GREEN;
   }
-
-  ROS_ASSERT(color != NULL);
 
   std::stringstream ss;
   ss << color;
