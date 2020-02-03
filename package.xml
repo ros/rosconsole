@@ -11,7 +11,9 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>apr</build_depend>
-  <build_depend>boost</build_depend>
+  <build_depend>libboost-regex-dev</build_depend>
+  <build_depend>libboost-system-dev</build_depend>
+  <build_depend>libboost-thread-dev</build_depend>
   <build_depend>cpp_common</build_depend>
   <build_depend>log4cxx</build_depend>
   <build_depend>rostime</build_depend>
