@@ -88,23 +88,23 @@ protected:
                       log4cxx::helpers::Pool&)
   {
     levels::Level level = levels::Count;
-    if (event->getLevel() == log4cxx::Level::getDebug())
+    if (event->getLevel()->toInt() == log4cxx::Level::DEBUG_INT)
     {
       level = levels::Debug;
     }
-    else if (event->getLevel() == log4cxx::Level::getInfo())
+    else if (event->getLevel()->toInt() == log4cxx::Level::INFO_INT)
     {
       level = levels::Info;
     }
-    else if (event->getLevel() == log4cxx::Level::getWarn())
+    else if (event->getLevel()->toInt() == log4cxx::Level::WARN_INT)
     {
       level = levels::Warn;
     }
-    else if (event->getLevel() == log4cxx::Level::getError())
+    else if (event->getLevel()->toInt() == log4cxx::Level::ERROR_INT)
     {
       level = levels::Error;
     }
-    else if (event->getLevel() == log4cxx::Level::getFatal())
+    else if (event->getLevel()->toInt() == log4cxx::Level::FATAL_INT)
     {
       level = levels::Fatal;
     }
@@ -230,25 +230,25 @@ bool get_loggers(std::map<std::string, levels::Level>& loggers)
       std::string name = (*it)->getName();
     #endif
 
-    const log4cxx::LevelPtr& log4cxx_level = (*it)->getEffectiveLevel();
+    int log4cxx_level = (*it)->getEffectiveLevel()->toInt();
     levels::Level level;
-    if (log4cxx_level == log4cxx::Level::getDebug())
+    if (log4cxx_level == log4cxx::Level::DEBUG_INT)
     {
       level = levels::Debug;
     }
-    else if (log4cxx_level == log4cxx::Level::getInfo())
+    else if (log4cxx_level == log4cxx::Level::INFO_INT)
     {
       level = levels::Info;
     }
-    else if (log4cxx_level == log4cxx::Level::getWarn())
+    else if (log4cxx_level == log4cxx::Level::WARN_INT)
     {
       level = levels::Warn;
     }
-    else if (log4cxx_level == log4cxx::Level::getError())
+    else if (log4cxx_level == log4cxx::Level::ERROR_INT)
     {
       level = levels::Error;
     }
-    else if (log4cxx_level == log4cxx::Level::getFatal())
+    else if (log4cxx_level == log4cxx::Level::FATAL_INT)
     {
       level = levels::Fatal;
     }
@@ -311,23 +311,23 @@ protected:
   {
     (void)pool;
     levels::Level level;
-    if (event->getLevel() == log4cxx::Level::getFatal())
+    if (event->getLevel()->toInt() == log4cxx::Level::FATAL_INT)
     {
       level = levels::Fatal;
     }
-    else if (event->getLevel() == log4cxx::Level::getError())
+    else if (event->getLevel()->toInt() == log4cxx::Level::ERROR_INT)
     {
       level = levels::Error;
     }
-    else if (event->getLevel() == log4cxx::Level::getWarn())
+    else if (event->getLevel()->toInt() == log4cxx::Level::WARN_INT)
     {
       level = levels::Warn;
     }
-    else if (event->getLevel() == log4cxx::Level::getInfo())
+    else if (event->getLevel()->toInt() == log4cxx::Level::INFO_INT)
     {
       level = levels::Info;
     }
-    else if (event->getLevel() == log4cxx::Level::getDebug())
+    else if (event->getLevel()->toInt() == log4cxx::Level::DEBUG_INT)
     {
       level = levels::Debug;
     }
