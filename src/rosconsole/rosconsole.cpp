@@ -335,34 +335,32 @@ void Formatter::init(const char* fmt)
 
 void Formatter::print(void* logger_handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
 {
-  const char* color = NULL;
-  FILE* f = stdout;
+  // print in red to stderr if level doesn't match any of the predefined ones
+  const char* color = COLOR_RED;
+  FILE* f = stderr;
 
   if (level == levels::Fatal)
   {
     color = COLOR_RED;
-    f = stderr;
   }
   else if (level == levels::Error)
   {
     color = COLOR_RED;
-    f = stderr;
   }
   else if (level == levels::Warn)
   {
     color = COLOR_YELLOW;
-    f = stderr;
   }
   else if (level == levels::Info)
   {
     color = COLOR_NORMAL;
+    f = stdout;
   }
   else if (level == levels::Debug)
   {
     color = COLOR_GREEN;
+    f = stdout;
   }
-
-  ROS_ASSERT(color != NULL);
 
   std::stringstream ss;
   ss << color;
