@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.15 (2020-02-12)
+--------------------
 * export boost-regex-dev for now (`#38 <https://github.com/ros/rosconsole/issues/38>`_)
 
 1.13.14 (2020-02-12)
