@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* bump minimum CMake version to avoid CMP0048 warning (`#36 <https://github.com/ros/rosconsole/issues/36>`_)
+
 1.13.12 (2020-02-11)
 --------------------
 * declare specific boost dependencies (`#35 <https://github.com/ros/rosconsole/issues/35>`_)
