@@ -2,6 +2,12 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* declare specific boost dependencies (`#35 <https://github.com/ros/rosconsole/issues/35>`_)
+* fix console printer to also print unknown levels (`#34 <https://github.com/ros/rosconsole/issues/34>`_)
+* fix level comparison for compatibility with upstream log4cxx (`#33 <https://github.com/ros/rosconsole/issues/33>`_)
+
 1.13.11 (2019-10-03)
 --------------------
 * direct WARN level messages to stderr (`#29 <https://github.com/ros/rosconsole/issues/29>`_)
