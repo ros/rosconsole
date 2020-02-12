@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* export boost-regex-dev for now (`#38 <https://github.com/ros/rosconsole/issues/38>`_)
+
 1.13.14 (2020-02-12)
 --------------------
 * add missing run dep for boost regex (`#37 <https://github.com/ros/rosconsole/issues/37>`_)
