@@ -42,6 +42,7 @@
 #include <gtest/gtest.h>
 
 #include <boost/shared_array.hpp>
+#include <boost/regex.hpp>
 
 class TestAppender : public log4cxx::AppenderSkeleton
 {
@@ -1000,6 +1001,78 @@ TEST(RosConsole, formatToString)
 {
   std::string str = ros::console::formatToString("Hello World %d", 5);
   EXPECT_STREQ(str.c_str(), "Hello World 5");
+}
+
+TEST(RosConsole, formatter)
+{
+  std::string format_string;
+
+  ros::console::Level level = ros::console::levels::Info;
+  char str[32];
+  char file[32];
+  char function[32];
+
+  std::string result;
+
+  // default time
+  {
+    std::string format_string = "${time}";
+
+    ros::console::g_formatter.tokens_.clear();
+    ros::console::g_formatter.init(format_string.c_str());
+
+    result = ros::console::g_formatter.getTokenStrings(
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
+
+    boost::regex expr("([0-9]+)\\.([0-9]+)");
+    EXPECT_TRUE(boost::regex_match(result, expr));
+  }
+
+  // time format
+  {
+    std::string format_string = "${time:%Y %H:%M:%S}";
+
+    ros::console::g_formatter.tokens_.clear();
+    ros::console::g_formatter.init(format_string.c_str());
+
+    result = ros::console::g_formatter.getTokenStrings(
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
+
+    boost::regex expr("([0-9]{4}) ([0-9]{2}:[0-9]{2}:[0-9]{2})");
+    EXPECT_TRUE(boost::regex_match(result, expr));
+  }
+
+  // default walltime
+  {
+    std::string format_string = "${walltime}";
+
+    ros::console::g_formatter.tokens_.clear();
+    ros::console::g_formatter.init(format_string.c_str());
+
+    result = ros::console::g_formatter.getTokenStrings(
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
+
+    boost::regex expr("([0-9]+)\\.([0-9]+)");
+    EXPECT_TRUE(boost::regex_match(result, expr));
+  }
+
+  // walltime format
+  {
+    std::string format_string = "${walltime:%Y %H:%M:%S}";
+
+    ros::console::g_formatter.tokens_.clear();
+    ros::console::g_formatter.init(format_string.c_str());
+
+    result = ros::console::g_formatter.getTokenStrings(
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
+
+    boost::regex expr("([0-9]{4}) ([0-9]{2}:[0-9]{2}:[0-9]{2})");
+    EXPECT_TRUE(boost::regex_match(result, expr));
+  }
 }
 
 int main(int argc, char **argv)

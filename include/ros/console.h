@@ -130,6 +130,9 @@ struct Formatter
 {
   void init(const char* fmt);
   void print(void* logger_handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line);
+  std::string getTokenStrings(
+    void *logger_handle, ::ros::console::Level level, const char *str,
+    const char *file, const char *function, int line) const;
   std::string format_;
   V_Token tokens_;
 };
