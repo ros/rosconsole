@@ -1022,12 +1022,8 @@ TEST(RosConsole, formatter)
     ros::console::g_formatter.init(format_string.c_str());
 
     result = ros::console::g_formatter.getTokenStrings(
-            log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME),
-            level,
-            str,
-            file,
-            function,
-            0);
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
 
     boost::regex expr("([0-9]+)\\.([0-9]+)");
     EXPECT_TRUE(boost::regex_match(result, expr));
@@ -1041,12 +1037,8 @@ TEST(RosConsole, formatter)
     ros::console::g_formatter.init(format_string.c_str());
 
     result = ros::console::g_formatter.getTokenStrings(
-            log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME),
-            level,
-            str,
-            file,
-            function,
-            0);
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
 
     boost::regex expr("([0-9]{4}) ([0-9]{2}:[0-9]{2}:[0-9]{2})");
     EXPECT_TRUE(boost::regex_match(result, expr));
@@ -1060,12 +1052,8 @@ TEST(RosConsole, formatter)
     ros::console::g_formatter.init(format_string.c_str());
 
     result = ros::console::g_formatter.getTokenStrings(
-            log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME),
-            level,
-            str,
-            file,
-            function,
-            0);
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
 
     boost::regex expr("([0-9]+)\\.([0-9]+)");
     EXPECT_TRUE(boost::regex_match(result, expr));
@@ -1079,12 +1067,8 @@ TEST(RosConsole, formatter)
     ros::console::g_formatter.init(format_string.c_str());
 
     result = ros::console::g_formatter.getTokenStrings(
-            log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME),
-            level,
-            str,
-            file,
-            function,
-            0);
+      log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME), level, str,
+      file, function, 0);
 
     boost::regex expr("([0-9]{4}) ([0-9]{2}:[0-9]{2}:[0-9]{2})");
     EXPECT_TRUE(boost::regex_match(result, expr));
