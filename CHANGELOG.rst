@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.14.0 (2020-04-06)
+-------------------
 * add timestamp formatting for rosconsole (`#22 <https://github.com/ros/rosconsole/issues/22>`_)
 
 1.13.15 (2020-02-12)
