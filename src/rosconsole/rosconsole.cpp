@@ -426,7 +426,12 @@ void Formatter::print(void* logger_handle, ::ros::console::Level level, const ch
   ss << COLOR_NORMAL;
 
   fprintf(f, "%s\n", ss.str().c_str());
-  
+
+  if (f == stderr)
+  {
+    fprintf(stdout, "%s\n", ss.str().c_str());
+  }
+
   if (g_force_stdout_line_buffered && f == stdout)
   {
     int flush_result = fflush(f);
