@@ -641,7 +641,7 @@ void print(FilterBase* filter, void* logger_handle, Level level,
     params.line = line;
     params.level = level;
     params.logger = logger_handle;
-    params.message = g_print_buffer.get();
+    params.message = str.c_str();
     enabled = filter->isEnabled(params);
     level = params.level;
 
