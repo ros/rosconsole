@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix message in filter parameters (`#43 <https://github.com/ros/rosconsole/issues/43>`_)
+
 1.13.15 (2020-02-12)
 --------------------
 * export boost-regex-dev for now (`#38 <https://github.com/ros/rosconsole/issues/38>`_)
