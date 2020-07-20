@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix message in filter parameters (`#43 <https://github.com/ros/rosconsole/issues/43>`_)
+
 1.14.0 (2020-04-06)
 -------------------
 * add timestamp formatting for rosconsole (`#22 <https://github.com/ros/rosconsole/issues/22>`_)
