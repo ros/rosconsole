@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.14.1 (2020-07-20)
+-------------------
 * fix message in filter parameters (`#43 <https://github.com/ros/rosconsole/issues/43>`_)
 
 1.14.0 (2020-04-06)
