@@ -51,6 +51,9 @@
 #include <cstring>
 #include <stdexcept>
 
+#include <stdio.h>
+#include <unistd.h>
+
 // declare interface for rosconsole implementations
 namespace ros
 {
@@ -73,17 +76,10 @@ log4cxx::LevelPtr g_level_lookup[levels::Count] =
 #endif
 std::string g_last_error_message = "Unknown Error";
 
-#ifdef WIN32
-  #define COLOR_NORMAL ""
-  #define COLOR_RED ""
-  #define COLOR_GREEN ""
-  #define COLOR_YELLOW ""
-#else
-  #define COLOR_NORMAL "\033[0m"
-  #define COLOR_RED "\033[31m"
-  #define COLOR_GREEN "\033[32m"
-  #define COLOR_YELLOW "\033[33m"
-#endif
+#define COLOR_NORMAL "\033[0m"
+#define COLOR_RED "\033[31m"
+#define COLOR_GREEN "\033[32m"
+#define COLOR_YELLOW "\033[33m"
 const char* g_format_string = "[${severity}] [${time}]: ${message}";
 
 bool g_force_stdout_line_buffered = false;
@@ -420,10 +416,24 @@ void Formatter::print(void* logger_handle, ::ros::console::Level level, const ch
     f = stdout;
   }
 
+#ifndef WIN32
+  const bool is_atty = false;
+#else
+  // Check output file descriptor is a terminal.
+  // Otherwise, ANSI escape sequence will cause corrupted text.
+  const bool is_atty = (isatty(fileno(f)) == 1);
+#endif
+
   std::stringstream ss;
-  ss << color;
+  if (is_atty)
+  {
+    ss << color;
+  }
   ss << getTokenStrings(logger_handle, level, str, file, function, line);
-  ss << COLOR_NORMAL;
+  if (is_atty)
+  {
+    ss << COLOR_NORMAL;
+  }
 
   fprintf(f, "%s\n", ss.str().c_str());
   
