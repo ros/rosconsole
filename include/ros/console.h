@@ -273,7 +273,7 @@ ROSCONSOLE_DECL std::string formatToString(const char* fmt, ...);
 } // namespace console
 } // namespace ros
 
-#ifdef WIN32
+#if defined(_MSC_VER)
 #define ROS_LIKELY(x)       (x)
 #define ROS_UNLIKELY(x)     (x)
 #else
@@ -281,7 +281,7 @@ ROSCONSOLE_DECL std::string formatToString(const char* fmt, ...);
 #define ROS_UNLIKELY(x)     __builtin_expect((x),0)
 #endif
 
-#if defined(MSVC)
+#if defined(_MSC_VER)
   #define __ROSCONSOLE_FUNCTION__ __FUNCSIG__
 #elif defined(__GNUC__)
   #define __ROSCONSOLE_FUNCTION__ __PRETTY_FUNCTION__
