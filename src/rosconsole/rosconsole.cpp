@@ -73,7 +73,7 @@ log4cxx::LevelPtr g_level_lookup[levels::Count] =
 #endif
 std::string g_last_error_message = "Unknown Error";
 
-#ifdef WIN32
+#ifdef _WIN32
   #define COLOR_NORMAL ""
   #define COLOR_RED ""
   #define COLOR_GREEN ""
