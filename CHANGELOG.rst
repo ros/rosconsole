@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.17 (2020-08-06)
+--------------------
 * check MSVC predefined macro (`#45 <https://github.com/ros/rosconsole/issues/45>`_)
 
 1.13.16 (2020-07-20)
