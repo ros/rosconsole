@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* check MSVC predefined macro (`#45 <https://github.com/ros/rosconsole/issues/45>`_)
+
 1.14.1 (2020-07-20)
 -------------------
 * fix message in filter parameters (`#43 <https://github.com/ros/rosconsole/issues/43>`_)
