@@ -88,6 +88,7 @@ const char* g_format_string = "[${severity}] [${time}]: ${message}";
 
 bool g_force_stdout_line_buffered = false;
 bool g_stdout_flush_failure_reported = false;
+bool g_color = true;
 
 typedef std::map<std::string, std::string> M_string;
 M_string g_extra_fixed_tokens;
@@ -421,9 +422,15 @@ void Formatter::print(void* logger_handle, ::ros::console::Level level, const ch
   }
 
   std::stringstream ss;
-  ss << color;
+  if (g_color)
+  {
+    ss << color;
+  }
   ss << getTokenStrings(logger_handle, level, str, file, function, line);
-  ss << COLOR_NORMAL;
+  if (g_color)
+  {
+    ss << COLOR_NORMAL;
+  }
 
   fprintf(f, "%s\n", ss.str().c_str());
   
@@ -494,6 +501,12 @@ void initialize()
         fprintf(stderr, "Warning: unexpected value %s specified for ROSCONSOLE_STDOUT_LINE_BUFFERED. Default value 0 "
           "will be used. Valid values are 1 or 0.\n", line_buffered.c_str());
       }
+    }
+
+    std::string no_color;
+    if (get_environment_variable(no_color, "NO_COLOR"))
+    {
+      g_color = false;
     }
 
     ::ros::console::impl::initialize();
