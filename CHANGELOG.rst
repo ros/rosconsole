@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.14.3 (2020-10-14)
+-------------------
 * support NO_COLOR environment variable (`#46 <https://github.com/ros/rosconsole/issues/46>`_)
 
 1.14.2 (2020-08-06)
