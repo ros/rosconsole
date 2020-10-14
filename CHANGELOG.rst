@@ -2,6 +2,10 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* support NO_COLOR environment variable (`#46 <https://github.com/ros/rosconsole/issues/46>`_)
+
 1.13.17 (2020-08-06)
 --------------------
 * check MSVC predefined macro (`#45 <https://github.com/ros/rosconsole/issues/45>`_)
