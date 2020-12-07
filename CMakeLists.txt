@@ -7,7 +7,7 @@ endif()
 
 find_package(catkin REQUIRED COMPONENTS cpp_common rostime rosunit)
 
-find_package(Boost COMPONENTS regex system thread)
+find_package(Boost REQUIRED COMPONENTS regex system thread)
 
 # select rosconsole backend
 set(ROSCONSOLE_BACKEND "" CACHE STRING "Type of rosconsole backend, one of 'log4cxx', 'glog', 'print'")
