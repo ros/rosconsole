@@ -158,11 +158,11 @@ struct SeverityToken : public Token
     }
     else if (level == levels::Warn)
     {
-      return " WARN";
+      return "WARN";
     }
     else if (level == levels::Info)
     {
-      return " INFO";
+      return "INFO";
     }
     else if (level == levels::Debug)
     {
