@@ -23,6 +23,12 @@ if(ROSCONSOLE_BACKEND STREQUAL "" OR ROSCONSOLE_BACKEND STREQUAL "log4cxx")
     list(APPEND rosconsole_backend_INCLUDE_DIRS ${LOG4CXX_INCLUDE_DIRS})
     list(APPEND rosconsole_backend_LIBRARIES rosconsole_log4cxx rosconsole_backend_interface ${LOG4CXX_LIBRARIES})
     set(ROSCONSOLE_BACKEND "log4cxx")
+    try_compile(LOG4CXX_REQUIRES_CXX17
+      "${CMAKE_BINARY_DIR}/check_log4cxx_requires_cxx17"
+      "${CMAKE_CURRENT_SOURCE_DIR}/cmake/check_log4cxx_requires_cxx17"
+      check_log4cxx_requires_cxx17
+    )
+    message(STATUS "log4cxx requires C++17: ${LOG4CXX_REQUIRES_CXX17}")
   elseif(ROSCONSOLE_BACKEND STREQUAL "log4cxx")
     message(FATAL_ERROR "Couldn't find log4cxx library")
   endif()
@@ -78,6 +84,11 @@ if(ROSCONSOLE_BACKEND STREQUAL "log4cxx")
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/speed_test.cpp")
     add_executable(rosconsole_speed_test test/speed_test.cpp)
     target_link_libraries(rosconsole_speed_test rosconsole ${rosconsole_backend_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+  endif()
+
+  if(${LOG4CXX_REQUIRES_CXX17})
+    set_property(TARGET rosconsole_log4cxx PROPERTY CXX_STANDARD 17)
+    set_property(TARGET rosconsole_log4cxx PROPERTY CXX_STANDARD_REQUIRED ON)
   endif()
 elseif(ROSCONSOLE_BACKEND STREQUAL "glog")
   add_library(rosconsole_glog src/rosconsole/impl/rosconsole_glog.cpp)
