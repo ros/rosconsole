@@ -252,6 +252,10 @@ bool get_loggers(std::map<std::string, levels::Level>& loggers)
     {
       level = levels::Fatal;
     }
+    else if (log4cxx_level == log4cxx::Level::OFF_INT)
+    {
+      level = levels::Info;
+    }
     else
     {
       return false;
@@ -289,8 +293,19 @@ bool set_logger_level(const std::string& name, levels::Level level)
   {
     return false;
   }
-
-  log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger(name);
+ 
+  log4cxx::LoggerPtr logger;
+  if(name == "disable"){ 
+    logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
+    log4cxx_level = log4cxx::Level::getOff();
+  }
+  else if(name == "enable"){ 
+    logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
+  }
+  else{
+    logger= log4cxx::Logger::getLogger(name);
+  }
+  
   logger->setLevel(log4cxx_level);
   ::ros::console::backend::notifyLoggerLevelsChanged();
   return true;
