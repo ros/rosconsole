@@ -181,10 +181,12 @@ void initialize()
 
 void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
 {
+  std::string filename(file);
+  std::string short_filename = filename.substr(filename.find_last_of("/\\") + 1);
   log4cxx::Logger* logger  = (log4cxx::Logger*)handle;
   try
   {
-    logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, function, line));
+    logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, short_filename.c_str(), function, line));
   }
   catch (std::exception& e)
   {
@@ -369,6 +371,18 @@ void deregister_appender(LogAppender* appender){
     g_log4cxx_appender = log4cxx::AppenderPtr();
   }
 }
+
+namespace {
+// log4cxx 0.11 and 0.13+ use types with operator->
+template <typename L> void shutdown_logger_repository(L l){
+  l->shutdown();
+}
+// log4cxx 0.12 uses a weakptr
+template <typename L> void shutdown_logger_repository(std::weak_ptr<L> l){
+  l.lock()->shutdown();
+}
+}
+
 void shutdown()
 {
   if(g_log4cxx_appender)
@@ -382,7 +396,8 @@ void shutdown()
   //
   // See https://code.ros.org/trac/ros/ticket/3271
   //
-  static_cast<log4cxx::spi::LoggerRepositoryPtr>(log4cxx::Logger::getRootLogger()->getLoggerRepository())->shutdown();
+  // static_cast<log4cxx::spi::LoggerRepositoryPtr>(log4cxx::Logger::getRootLogger()->getLoggerRepository())->shutdown();
+  shutdown_logger_repository(log4cxx::Logger::getRootLogger()->getLoggerRepository());
 }
 
 } // namespace impl
