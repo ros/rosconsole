@@ -181,12 +181,18 @@ void initialize()
 
 void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
 {
+  log4cxx::Logger* logger  = (log4cxx::Logger*)handle;
+#if (LOG4CXX_VERSION_MAJOR == 0) && (LOG4CXX_VERSION_MINOR > 11)
   std::string filename(file);
   std::string short_filename = filename.substr(filename.find_last_of("/\\") + 1);
-  log4cxx::Logger* logger  = (log4cxx::Logger*)handle;
   try
   {
     logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, short_filename.c_str(), function, line));
+#else
+  try
+  {
+    logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, function, line));
+#endif
   }
   catch (std::exception& e)
   {
