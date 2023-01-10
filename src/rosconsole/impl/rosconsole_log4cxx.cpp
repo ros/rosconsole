@@ -166,7 +166,7 @@ void initialize()
   }
 
   log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
-  logger->addAppender(new ROSConsoleStdioAppender);
+  logger->addAppender(log4cxx::AppenderPtr(new ROSConsoleStdioAppender));
 #ifdef _MSC_VER
   if ( ros_root_cstr != NULL ) {
 	  free(ros_root_cstr);
@@ -182,9 +182,17 @@ void initialize()
 void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
 {
   log4cxx::Logger* logger  = (log4cxx::Logger*)handle;
+#if (LOG4CXX_VERSION_MAJOR > 0) || ( (LOG4CXX_VERSION_MAJOR == 0) && (LOG4CXX_VERSION_MINOR > 11) )
+  std::string filename(file);
+  std::string short_filename = filename.substr(filename.find_last_of("/\\") + 1);
+  try
+  {
+    logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, short_filename.c_str(), function, line));
+#else
   try
   {
     logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, function, line));
+#endif
   }
   catch (std::exception& e)
   {
@@ -200,7 +208,7 @@ bool isEnabledFor(void* handle, ::ros::console::Level level)
 
 void* getHandle(const std::string& name)
 {
-  return log4cxx::Logger::getLogger(name);
+  return &*log4cxx::Logger::getLogger(name);
 }
 
 std::string getName(void* handle)
@@ -216,7 +224,7 @@ std::string getName(void* handle)
 
 bool get_loggers(std::map<std::string, levels::Level>& loggers)
 {
-  log4cxx::spi::LoggerRepositoryPtr repo = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME)->getLoggerRepository();
+  auto repo = log4cxx::spi::LoggerRepositoryPtr(log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME)->getLoggerRepository());
 
   log4cxx::LoggerList current_loggers = repo->getCurrentLoggers();
   log4cxx::LoggerList::iterator it = current_loggers.begin();
@@ -352,38 +360,50 @@ protected:
   ros::console::LogAppender* appender_;
 };
 
-Log4cxxAppender* g_log4cxx_appender = 0;
+log4cxx::AppenderPtr g_log4cxx_appender = {};
 
 void register_appender(LogAppender* appender)
 {
-  g_log4cxx_appender = new Log4cxxAppender(appender);
+  g_log4cxx_appender = log4cxx::AppenderPtr( new Log4cxxAppender(appender));
   const log4cxx::LoggerPtr& logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
   logger->addAppender(g_log4cxx_appender);
 }
 
 void deregister_appender(LogAppender* appender){
-  if(g_log4cxx_appender->getAppender() == appender)
+  if(dynamic_cast<Log4cxxAppender*>(&*g_log4cxx_appender)->getAppender() == appender)
   {
     const log4cxx::LoggerPtr& logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
     logger->removeAppender(g_log4cxx_appender);
-    delete g_log4cxx_appender;
-    g_log4cxx_appender = 0;
+    g_log4cxx_appender = log4cxx::AppenderPtr();
   }
 }
+
+namespace {
+// log4cxx 0.11 and 0.13+ use types with operator->
+template <typename L> void shutdown_logger_repository(L l){
+  l->shutdown();
+}
+// log4cxx 0.12 uses a weakptr
+template <typename L> void shutdown_logger_repository(std::weak_ptr<L> l){
+  l.lock()->shutdown();
+}
+}
+
 void shutdown()
 {
   if(g_log4cxx_appender)
   {
     const log4cxx::LoggerPtr& logger = log4cxx::Logger::getLogger(ROSCONSOLE_ROOT_LOGGER_NAME);
     logger->removeAppender(g_log4cxx_appender);
-    g_log4cxx_appender = 0;
+    g_log4cxx_appender = log4cxx::AppenderPtr();
   }
   // reset this so that the logger doesn't get crashily destroyed
   // again during global destruction.  
   //
   // See https://code.ros.org/trac/ros/ticket/3271
   //
-  log4cxx::Logger::getRootLogger()->getLoggerRepository()->shutdown();
+  // static_cast<log4cxx::spi::LoggerRepositoryPtr>(log4cxx::Logger::getRootLogger()->getLoggerRepository())->shutdown();
+  shutdown_logger_repository(log4cxx::Logger::getRootLogger()->getLoggerRepository());
 }
 
 } // namespace impl
