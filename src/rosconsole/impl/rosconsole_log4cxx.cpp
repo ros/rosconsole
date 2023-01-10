@@ -182,7 +182,7 @@ void initialize()
 void print(void* handle, ::ros::console::Level level, const char* str, const char* file, const char* function, int line)
 {
   log4cxx::Logger* logger  = (log4cxx::Logger*)handle;
-#if (LOG4CXX_VERSION_MAJOR == 0) && (LOG4CXX_VERSION_MINOR > 11)
+#if (LOG4CXX_VERSION_MAJOR > 0) || ( (LOG4CXX_VERSION_MAJOR == 0) && (LOG4CXX_VERSION_MINOR > 11) )
   std::string filename(file);
   std::string short_filename = filename.substr(filename.find_last_of("/\\") + 1);
   try
