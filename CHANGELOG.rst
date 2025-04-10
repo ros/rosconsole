@@ -2,8 +2,8 @@
 Changelog for package rosconsole
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.14.4 (2025-04-10)
+-------------------
 * Finding boost dependencies is now required. (`#47 <https://github.com/ros/rosconsole/issues/47>`_)
 * Remove undesired blank spaces (`#52 <https://github.com/ros/rosconsole/issues/52>`_)
 * Contributors: H Singh, Zheng Qu
